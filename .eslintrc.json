@@ -13,8 +13,8 @@
   },
   "plugins": ["react"],
   "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     // "quotes": [2, "double"],
-    "no-console": "error"
+    // "no-console": "error"
   }
 }
