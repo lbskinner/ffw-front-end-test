@@ -21,6 +21,12 @@
 
 h6 {
   padding-left: 20px;
+  color: red;
+}
+
+h6:hover {
+  cursor: pointer;
+  color: rgb(179, 189, 218);
 }
 
 .fontsContainer {
