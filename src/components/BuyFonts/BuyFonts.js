@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width: 70%;
+`;
 
 function BuyFonts() {
   const [buyFontsData, setBuyFontsData] = useState();
@@ -17,7 +22,8 @@ function BuyFonts() {
   useEffect(() => {
     fetchBuyFontsData();
   }, []);
-  return <div>{buyFontsData}</div>;
+
+  return <Wrapper>{buyFontsData}</Wrapper>;
 }
 
 export default BuyFonts;

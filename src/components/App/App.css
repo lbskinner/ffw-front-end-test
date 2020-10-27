@@ -3,6 +3,8 @@
   width: 65%;
   min-width: 500px;
   margin: 20px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .textContainer {
@@ -24,4 +26,8 @@ h6 {
 .fontsContainer {
   border: 2px solid rgb(179, 189, 218);
   border-radius: 4px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

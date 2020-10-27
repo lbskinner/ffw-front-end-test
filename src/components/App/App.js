@@ -14,7 +14,7 @@ function App() {
         </div>
       </div>
       <div className="fontsContainer">
-        <MyFonts />
+        {/* <MyFonts /> */}
         <BuyFonts />
       </div>
     </div>
