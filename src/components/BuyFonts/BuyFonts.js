@@ -8,10 +8,10 @@ const Wrapper = styled.div`
   width: 70%;
 `;
 
-function BuyFonts({ tabsData, buyFontsData, dispatch }) {
+function BuyFonts({ tabs, buyFonts, dispatch }) {
   const fetchBuyFontsData = async () => {
     try {
-      const buyFontsContent = tabsData[1].content_endpoint;
+      const buyFontsContent = tabs[1].content_endpoint;
       const buyFontsData = await fetchData(buyFontsContent);
       dispatch({
         type: "SET_BUY_FONTS",
@@ -26,7 +26,7 @@ function BuyFonts({ tabsData, buyFontsData, dispatch }) {
     fetchBuyFontsData();
   }, []);
 
-  return <Wrapper>{buyFontsData.content}</Wrapper>;
+  return <Wrapper>{buyFonts.content}</Wrapper>;
 }
 
 export default connect(mapStoreToProps)(BuyFonts);

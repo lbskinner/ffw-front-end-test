@@ -18,6 +18,15 @@ const myFontsReducer = (state = [], action) => {
   }
 };
 
+const myFontSelectedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "SET_MY_FONT_SELECTED":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const buyFontsReducer = (state = {}, action) => {
   switch (action.type) {
     case "SET_BUY_FONTS":
@@ -30,6 +39,7 @@ const buyFontsReducer = (state = {}, action) => {
 const rootReducer = combineReducers({
   tabsReducer,
   myFontsReducer,
+  myFontSelectedReducer,
   buyFontsReducer,
 });
 

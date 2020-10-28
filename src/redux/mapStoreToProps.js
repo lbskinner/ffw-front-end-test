@@ -1,9 +1,10 @@
 const mapStoreToProps = (reduxState) => {
   return {
     store: reduxState,
-    tabsData: reduxState.tabsReducer,
-    buyFontsData: reduxState.buyFontsReducer,
-    myFontsData: reduxState.myFontsReducer,
+    tabs: reduxState.tabsReducer,
+    buyFonts: reduxState.buyFontsReducer,
+    myFonts: reduxState.myFontsReducer,
+    myFontSelected: reduxState.myFontSelectedReducer,
   };
 };
 

@@ -49,7 +49,7 @@ const FontsContent = styled.div`
   align-items: center;
 `;
 
-function App({ tabsData, dispatch }) {
+function App({ tabs, myFonts, dispatch }) {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
 
   const fetchTabsData = async () => {
@@ -58,6 +58,20 @@ function App({ tabsData, dispatch }) {
       dispatch({
         type: "SET_TAB_DATA",
         payload: [...tabData],
+      });
+      fetchMyFontsData(tabData[0].content_endpoint);
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  const fetchMyFontsData = async (myFontsContent) => {
+    try {
+      // const myFontsContent = tabsData[0].content_endpoint;
+      const myFontsData = await fetchData(myFontsContent);
+      dispatch({
+        type: "SET_MY_FONTS",
+        payload: [...myFontsData.content],
       });
     } catch (error) {
       console.warn(error);
@@ -86,6 +100,9 @@ function App({ tabsData, dispatch }) {
   const handleClickMyFontsTab = (label) => {
     if (label === "My Fonts") {
       setDisplayMyFonts(true);
+      if (myFonts.length === 0) {
+        fetchMyFontsData(tabs[0].content_endpoint);
+      }
     } else {
       setDisplayMyFonts(false);
     }
@@ -96,7 +113,7 @@ function App({ tabsData, dispatch }) {
       <FontTextContainer>
         <h2>Please select one font</h2>
         <TabContainer>
-          {tabsData.map((tab) => {
+          {tabs.map((tab) => {
             return (
               <TabText
                 key={tab.id}

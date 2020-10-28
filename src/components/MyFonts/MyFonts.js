@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchData } from "../../API";
+import mapStoreToProps from "../../redux/mapStoreToProps";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -63,42 +66,44 @@ const ListItem = styled.li`
     props.selectProps ? "rgba(0, 0, 0, 0.5)" : "rgb(0, 0, 0)"};
 `;
 
-function MyFonts() {
-  const [myFontsData, setMyFontsData] = useState([]);
+function MyFonts({ tabs, myFonts, myFontSelected, dispatch }) {
   const [fontIdClicked, setFontIdClicked] = useState();
 
   const fetchMyFontsData = async () => {
     try {
-      const url = "http://json.ffwagency.md/fonts_a";
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data.content);
-      setMyFontsData([...data.content]);
+      const myFontsContent = tabs[0].content_endpoint;
+      const myFontsData = await fetchData(myFontsContent);
+      dispatch({
+        type: "SET_MY_FONTS",
+        payload: [...myFontsData.content],
+      });
     } catch (error) {
       console.warn(error);
     }
   };
 
-  useEffect(() => {
-    fetchMyFontsData();
-  }, []);
+  useEffect(() => {}, []);
 
-  const handleClickFontCard = (fontId) => {
-    console.log(fontId);
-    setFontIdClicked(fontId);
+  const handleClickFontCard = (font) => {
+    // console.log(fontId);
+    // setFontIdClicked(fontId);
+    dispatch({
+      type: "SET_MY_FONT_SELECTED",
+      payload: font,
+    });
   };
 
   return (
     <Wrapper>
       <List>
-        {myFontsData.map((font) => {
+        {myFonts.map((font) => {
           return (
             <FontItem key={font.id}>
-              <ListItem selectProps={font.id === fontIdClicked}>
+              <ListItem selectProps={font.id === myFontSelected.id}>
                 <ColorBlock
                   colorProps={font.color}
-                  selectProps={font.id === fontIdClicked}
-                  onClick={() => handleClickFontCard(font.id)}
+                  selectProps={font.id === myFontSelected.id}
+                  onClick={() => handleClickFontCard(font)}
                 >
                   <ColoredLetter>{font.abbr}</ColoredLetter>
                 </ColorBlock>
@@ -112,4 +117,4 @@ function MyFonts() {
   );
 }
 
-export default MyFonts;
+export default connect(mapStoreToProps)(MyFonts);
