@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchData } from "../../API";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 import styled from "styled-components";
 
@@ -66,27 +65,8 @@ const ListItem = styled.li`
     props.selectProps ? "rgba(0, 0, 0, 0.5)" : "rgb(0, 0, 0)"};
 `;
 
-function MyFonts({ tabs, myFonts, myFontSelected, dispatch }) {
-  const [fontIdClicked, setFontIdClicked] = useState();
-
-  const fetchMyFontsData = async () => {
-    try {
-      const myFontsContent = tabs[0].content_endpoint;
-      const myFontsData = await fetchData(myFontsContent);
-      dispatch({
-        type: "SET_MY_FONTS",
-        payload: [...myFontsData.content],
-      });
-    } catch (error) {
-      console.warn(error);
-    }
-  };
-
-  useEffect(() => {}, []);
-
+function MyFonts({ myFonts, myFontSelected, dispatch }) {
   const handleClickFontCard = (font) => {
-    // console.log(fontId);
-    // setFontIdClicked(fontId);
     dispatch({
       type: "SET_MY_FONT_SELECTED",
       payload: font,

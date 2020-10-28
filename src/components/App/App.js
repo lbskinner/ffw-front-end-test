@@ -49,7 +49,7 @@ const FontsContent = styled.div`
   align-items: center;
 `;
 
-function App({ tabs, myFonts, dispatch }) {
+function App({ tabs, myFonts, buyFonts, dispatch }) {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
 
   const fetchTabsData = async () => {
@@ -67,7 +67,6 @@ function App({ tabs, myFonts, dispatch }) {
 
   const fetchMyFontsData = async (myFontsContent) => {
     try {
-      // const myFontsContent = tabsData[0].content_endpoint;
       const myFontsData = await fetchData(myFontsContent);
       dispatch({
         type: "SET_MY_FONTS",
@@ -78,20 +77,17 @@ function App({ tabs, myFonts, dispatch }) {
     }
   };
 
-  // const fetchBuyFontsData = async () => {
-  //   try {
-  //     const buyFontsContent = store.tabsReducer[1].content_endpoint;
-  //     console.log(buyFontsContent);
-  //     const buyFontsData = await fetchData()
-  //     const url = "http://json.ffwagency.md/fonts_b";
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-  //     console.log(data.content);
-  //     setBuyFontsData(data.content);
-  //   } catch (error) {
-  //     console.warn(error);
-  //   }
-  // };
+  const fetchBuyFontsData = async (buyFontsContent) => {
+    try {
+      const buyFontsData = await fetchData(buyFontsContent);
+      dispatch({
+        type: "SET_BUY_FONTS",
+        payload: buyFontsData,
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  };
 
   useEffect(() => {
     fetchTabsData();
@@ -105,6 +101,9 @@ function App({ tabs, myFonts, dispatch }) {
       }
     } else {
       setDisplayMyFonts(false);
+      if (Object.keys(buyFonts).length === 0) {
+        fetchBuyFontsData(tabs[1].content_endpoint);
+      }
     }
   };
 
