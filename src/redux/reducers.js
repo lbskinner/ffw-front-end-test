@@ -9,8 +9,28 @@ const tabsReducer = (state = [], action) => {
   }
 };
 
+const myFontsReducer = (state = [], action) => {
+  switch (action.type) {
+    case "SET_MY_FONTS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const buyFontsReducer = (state = [], action) => {
+  switch (action.type) {
+    case "SET_BUT_FONTS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   tabsReducer,
+  myFontsReducer,
+  buyFontsReducer,
 });
 
 export default rootReducer;

@@ -33,6 +33,9 @@ const TabText = styled.h6`
 
   &:hover {
     cursor: pointer;
+  }
+
+  &.selected {
     color: rgb(179, 189, 218);
   }
 `;
@@ -48,12 +51,10 @@ const FontsContent = styled.div`
 
 function App({ store, dispatch }) {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
-  const [tabsData, setTabsData] = useState([]);
 
   const fetchTabsData = async () => {
     try {
       const tabData = await fetchData("tabs");
-      setTabsData([...tabData]);
       dispatch({
         type: "SET_TAB_DATA",
         payload: [...tabData],
@@ -68,7 +69,11 @@ function App({ store, dispatch }) {
   }, []);
 
   const handleClickMyFontsTab = (label) => {
-    label === "My Fonts" ? setDisplayMyFonts(true) : setDisplayMyFonts(false);
+    if (label === "My Fonts") {
+      setDisplayMyFonts(true);
+    } else {
+      setDisplayMyFonts(false);
+    }
   };
 
   return (
@@ -81,6 +86,13 @@ function App({ store, dispatch }) {
               <TabText
                 key={tab.id}
                 onClick={() => handleClickMyFontsTab(tab.label)}
+                className={
+                  displayMyFonts && tab.label === "My Fonts"
+                    ? "selected"
+                    : !displayMyFonts && tab.label === "Buy Fonts"
+                    ? "selected"
+                    : ""
+                }
               >
                 {tab.label.toUpperCase()}
               </TabText>
