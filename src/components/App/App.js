@@ -49,7 +49,7 @@ const FontsContent = styled.div`
   align-items: center;
 `;
 
-function App({ store, dispatch }) {
+function App({ tabsData, dispatch }) {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
 
   const fetchTabsData = async () => {
@@ -63,6 +63,21 @@ function App({ store, dispatch }) {
       console.warn(error);
     }
   };
+
+  // const fetchBuyFontsData = async () => {
+  //   try {
+  //     const buyFontsContent = store.tabsReducer[1].content_endpoint;
+  //     console.log(buyFontsContent);
+  //     const buyFontsData = await fetchData()
+  //     const url = "http://json.ffwagency.md/fonts_b";
+  //     const response = await fetch(url);
+  //     const data = await response.json();
+  //     console.log(data.content);
+  //     setBuyFontsData(data.content);
+  //   } catch (error) {
+  //     console.warn(error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchTabsData();
@@ -81,7 +96,7 @@ function App({ store, dispatch }) {
       <FontTextContainer>
         <h2>Please select one font</h2>
         <TabContainer>
-          {store.tabsReducer.map((tab) => {
+          {tabsData.map((tab) => {
             return (
               <TabText
                 key={tab.id}

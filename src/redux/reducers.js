@@ -18,9 +18,9 @@ const myFontsReducer = (state = [], action) => {
   }
 };
 
-const buyFontsReducer = (state = [], action) => {
+const buyFontsReducer = (state = {}, action) => {
   switch (action.type) {
-    case "SET_BUT_FONTS":
+    case "SET_BUY_FONTS":
       return action.payload;
     default:
       return state;
