@@ -2,10 +2,49 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchData } from "../../API";
 import mapStoreToProps from "../../redux/mapStoreToProps";
+import styled from "styled-components";
 import BuyFonts from "../BuyFonts/BuyFonts";
 import MyFonts from "../MyFonts/MyFonts";
 
-import "./App.css";
+const AppContainer = styled.div`
+  height: 450px;
+  width: 65%;
+  min-width: 500px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const FontTextContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-items: flex-end;
+`;
+
+const TabContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const TabText = styled.h6`
+  padding-left: 20px;
+  color: red;
+
+  &:hover {
+    cursor: pointer;
+    color: rgb(179, 189, 218);
+  }
+`;
+
+const FontsContent = styled.div`
+  border: 2px solid rgb(179, 189, 218);
+  border-radius: 4px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function App({ store, dispatch }) {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
@@ -33,23 +72,24 @@ function App({ store, dispatch }) {
   };
 
   return (
-    <div className="AppContainer">
-      <div className="textContainer">
+    <AppContainer>
+      <FontTextContainer>
         <h2>Please select one font</h2>
-        <div className="tabContainer">
+        <TabContainer>
           {store.tabsReducer.map((tab) => {
             return (
-              <h6 key={tab.id} onClick={() => handleClickMyFontsTab(tab.label)}>
+              <TabText
+                key={tab.id}
+                onClick={() => handleClickMyFontsTab(tab.label)}
+              >
                 {tab.label.toUpperCase()}
-              </h6>
+              </TabText>
             );
           })}
-        </div>
-      </div>
-      <div className="fontsContainer">
-        {displayMyFonts ? <MyFonts /> : <BuyFonts />}
-      </div>
-    </div>
+        </TabContainer>
+      </FontTextContainer>
+      <FontsContent>{displayMyFonts ? <MyFonts /> : <BuyFonts />}</FontsContent>
+    </AppContainer>
   );
 }
 
