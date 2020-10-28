@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../redux/mapStoreToProps";
 import BuyFonts from "../BuyFonts/BuyFonts";
 import MyFonts from "../MyFonts/MyFonts";
 import "./App.css";
 
-function App() {
+function App({ dispatch }) {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
   const [tabsData, setTabsData] = useState([]);
 
@@ -14,6 +16,10 @@ function App() {
       const data = await response.json();
       console.log(data);
       setTabsData([...data]);
+      dispatch({
+        type: "SET_TAB_DATA",
+        payload: [...data],
+      });
     } catch (error) {
       console.warn(error);
     }
@@ -48,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(mapStoreToProps)(App);
