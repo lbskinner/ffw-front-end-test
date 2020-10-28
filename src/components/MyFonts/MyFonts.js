@@ -48,16 +48,18 @@ function MyFonts() {
 
   return (
     <Wrapper>
-      {myFontsData.map((font) => {
-        return (
-          <ul key={font.id}>
-            <ColorBlock colorProps={font.color}>
-              <ColoredLetter>{font.abbr}</ColoredLetter>
-            </ColorBlock>
-            <li>{font.label}</li>
-          </ul>
-        );
-      })}
+      <ul>
+        {myFontsData.map((font) => {
+          return (
+            <div key={font.id}>
+              <ColorBlock colorProps={font.color}>
+                <ColoredLetter>{font.abbr}</ColoredLetter>
+              </ColorBlock>
+              <li>{font.label}</li>
+            </div>
+          );
+        })}
+      </ul>
     </Wrapper>
   );
 }

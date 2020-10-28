@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BuyFonts from "../BuyFonts/BuyFonts";
 import MyFonts from "../MyFonts/MyFonts";
 import "./App.css";
 
 function App() {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
+  const [tabsData, setTabsData] = useState([]);
 
-  const handleClickMyFontsTab = () => {
-    setDisplayMyFonts(true);
+  const fetchTabsData = async () => {
+    try {
+      const url = "http://json.ffwagency.md/tabs";
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+      setTabsData([...data]);
+    } catch (error) {
+      console.warn(error);
+    }
   };
 
-  const handleClickBuyFontsTab = () => {
-    setDisplayMyFonts(false);
+  useEffect(() => {
+    fetchTabsData();
+  }, []);
+
+  const handleClickMyFontsTab = (label) => {
+    label === "My Fonts" ? setDisplayMyFonts(true) : setDisplayMyFonts(false);
   };
 
   return (
@@ -19,8 +32,13 @@ function App() {
       <div className="textContainer">
         <h2>Please select one font</h2>
         <div className="tabContainer">
-          <h6 onClick={handleClickMyFontsTab}>MY FONTS</h6>
-          <h6 onClick={handleClickBuyFontsTab}>BUY FONTS</h6>
+          {tabsData.map((tab) => {
+            return (
+              <h6 key={tab.id} onClick={() => handleClickMyFontsTab(tab.label)}>
+                {tab.label.toUpperCase()}
+              </h6>
+            );
+          })}
         </div>
       </div>
       <div className="fontsContainer">
