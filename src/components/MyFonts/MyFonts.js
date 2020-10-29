@@ -73,6 +73,10 @@ const ColorBlock = styled.div`
   &:hover {
     cursor: pointer;
   }
+
+  &:focus {
+    outline: solid rgb(179, 189, 218);
+  }
 `;
 
 const ColoredLetter = styled.span`
@@ -93,6 +97,13 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
     });
   };
 
+  const handlePressEnterKey = (event, font) => {
+    if (event.key === "Enter") {
+      event.target.blur();
+      handleClickFontCard(font);
+    }
+  };
+
   return (
     <Wrapper>
       <List>
@@ -103,6 +114,8 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
                 colorProps={font.color}
                 selectProps={font.id === myFontSelected.id}
                 onClick={() => handleClickFontCard(font)}
+                onKeyPress={(event) => handlePressEnterKey(event, font)}
+                tabIndex={0}
               >
                 <ColoredLetter>{font.abbr}</ColoredLetter>
               </ColorBlock>

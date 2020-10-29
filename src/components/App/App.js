@@ -34,9 +34,9 @@ const TabContainer = styled.div`
 `;
 
 const TabText = styled.h6`
-  padding-left: 20px;
+  padding: 5px;
   color: red;
-  margin: 15px 0;
+  margin: 15px 0 15px 10px;
   font-weight: 450;
 
   &:hover {
@@ -45,6 +45,10 @@ const TabText = styled.h6`
 
   &.selected {
     color: rgb(179, 189, 218);
+  }
+
+  &:focus {
+    outline: thin solid rgb(179, 189, 218);
   }
 `;
 
@@ -115,6 +119,13 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
     }
   };
 
+  const handlePressEnterKey = (event, label) => {
+    if (event.key === "Enter") {
+      event.target.blur();
+      handleClickMyFontsTab(label);
+    }
+  };
+
   return (
     <AppContainer>
       <FontTextContainer>
@@ -125,6 +136,7 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
               <TabText
                 key={tab.id}
                 onClick={() => handleClickMyFontsTab(tab.label)}
+                onKeyPress={(event) => handlePressEnterKey(event, tab.label)}
                 className={
                   displayMyFonts && tab.label === "My Fonts"
                     ? "selected"
@@ -132,6 +144,8 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
                     ? "selected"
                     : ""
                 }
+                role="button"
+                tabIndex={0}
               >
                 {tab.label.toUpperCase()}
               </TabText>
