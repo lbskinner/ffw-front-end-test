@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   margin: 40px;
-  //   height: 80%;
 `;
 const List = styled.ul`
   display: grid;
@@ -24,7 +23,8 @@ const ListItem = styled.li`
   justify-content: space-between;
   font-size: 1rem;
   color: ${(props) =>
-    props.selectProps ? "rgba(0, 0, 0, 0.5)" : "rgb(0, 0, 0)"};
+    props.selectProps ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 1)"};
+
   @media screen and (min-width: 900px) {
     &:first-child {
       flex-direction: column;
