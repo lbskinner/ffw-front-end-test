@@ -7,10 +7,11 @@ import BuyFonts from "../BuyFonts/BuyFonts";
 import MyFonts from "../MyFonts/MyFonts";
 
 const AppContainer = styled.div`
-  min-height: 450px;
-  width: 60%;
+  height: 100%;
+  min-height: 400px;
+  width: 55%;
   min-width: 500px;
-  margin: 20px auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
 `;
@@ -22,6 +23,11 @@ const FontTextContainer = styled.div`
   align-items: flex-end;
 `;
 
+const Title = styled.h2`
+  font-weight: 500;
+  margin: 10px 0;
+`;
+
 const TabContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -30,6 +36,7 @@ const TabContainer = styled.div`
 const TabText = styled.h6`
   padding-left: 20px;
   color: red;
+  margin: 15px 0;
 
   &:hover {
     cursor: pointer;
@@ -110,7 +117,7 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
   return (
     <AppContainer>
       <FontTextContainer>
-        <h2>Please select one font</h2>
+        <Title>Please select one font</Title>
         <TabContainer>
           {tabs.map((tab) => {
             return (

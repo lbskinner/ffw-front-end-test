@@ -4,14 +4,13 @@ import mapStoreToProps from "../../redux/mapStoreToProps";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  margin: 30px;
+  margin: 40px;
   //   height: 80%;
 `;
 const List = styled.ul`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  row-gap: 10px;
+  grid-template-columns: minmax(30%, 50%) auto;
+  grid-template-rows: repeat(2, minmax(120px, auto));
   grid-auto-flow: column;
   padding: 0;
   margin: 0;
@@ -34,21 +33,36 @@ const ListItem = styled.li`
     width: 120px;
     height: 120px;
   }
+
+  &:first-of-type :first-child span {
+    font-size: 2.3em;
+  }
 `;
 
-const FontLabel = styled.p`
+const ListDot = styled.p`
   display: list-item;
   width: 50%;
   margin-left: 1em;
+  margin-top: 10px;
+  color: ${(props) =>
+    props.selectProps ? "rgba(191, 183, 183, 0.5)" : "rgba(191, 183, 183, 1)"};
+  font-size: 1.5rem;
+  line-height: 1rem;
+`;
+
+const FontLabel = styled.span`
+  color: ${(props) =>
+    props.selectProps ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 1)"};
+  font-size: 1rem;
 `;
 
 const ColorBlock = styled.div`
-  width: 90px;
-  height: 90px;
+  width: 85px;
+  height: 85px;
   border: ${(props) =>
     props.selectProps
       ? "1px solid rgba(0, 0, 0, 0.5)"
-      : "1px solid rgb(0, 0, 0)"};
+      : "1px solid rgba(0, 0, 0, 1)"};
   border-radius: 15px;
   background-color: ${(props) => props.colorProps};
   padding: 4px;
@@ -65,7 +79,7 @@ const ColoredLetter = styled.span`
   position: absolute;
   bottom: 10px;
   left: 16px;
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: 900;
   color: #fff;
   opacity: 0.3;
@@ -84,7 +98,7 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
       <List>
         {myFonts.map((font) => {
           return (
-            <ListItem key={font.id} selectProps={font.id === myFontSelected.id}>
+            <ListItem key={font.id}>
               <ColorBlock
                 colorProps={font.color}
                 selectProps={font.id === myFontSelected.id}
@@ -92,7 +106,11 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
               >
                 <ColoredLetter>{font.abbr}</ColoredLetter>
               </ColorBlock>
-              <FontLabel>{font.label}</FontLabel>
+              <ListDot selectProps={font.id === myFontSelected.id}>
+                <FontLabel selectProps={font.id === myFontSelected.id}>
+                  {font.label}
+                </FontLabel>
+              </ListDot>
             </ListItem>
           );
         })}
