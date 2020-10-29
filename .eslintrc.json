@@ -3,7 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["plugin:react/recommended"],
+  "extends": ["plugin:react/recommended", "plugin:jsx-a11y/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -11,10 +11,11 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "jsx-a11y"],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/prop-types": 0
+    // "jsx-a11y/rule-name": 2
     // "quotes": [2, "double"],
     // "no-console": "error"
   }

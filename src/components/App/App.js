@@ -37,6 +37,7 @@ const TabText = styled.h6`
   padding-left: 20px;
   color: red;
   margin: 15px 0;
+  font-weight: 450;
 
   &:hover {
     cursor: pointer;
