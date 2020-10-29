@@ -7,7 +7,7 @@ import BuyFonts from "../BuyFonts/BuyFonts";
 import MyFonts from "../MyFonts/MyFonts";
 
 const AppContainer = styled.div`
-  height: 450px;
+  min-height: 450px;
   width: 65%;
   min-width: 500px;
   margin: 20px auto;
