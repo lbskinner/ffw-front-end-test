@@ -8,7 +8,7 @@ import MyFonts from "../MyFonts/MyFonts";
 
 const AppContainer = styled.div`
   min-height: 450px;
-  width: 65%;
+  width: 60%;
   min-width: 500px;
   margin: 20px auto;
   display: flex;

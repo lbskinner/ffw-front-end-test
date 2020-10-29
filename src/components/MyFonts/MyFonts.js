@@ -11,6 +11,7 @@ const List = styled.ul`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+  row-gap: 10px;
   grid-auto-flow: column;
   padding: 0;
   margin: 0;
@@ -28,6 +29,11 @@ const ListItem = styled.li`
     grid-column: 1;
     grid-row: 1 / 3;
   }
+
+  &:first-of-type div {
+    width: 120px;
+    height: 120px;
+  }
 `;
 
 const FontLabel = styled.p`
@@ -38,7 +44,6 @@ const FontLabel = styled.p`
 
 const ColorBlock = styled.div`
   width: 90px;
-  //   padding-top: 50%;
   height: 90px;
   border: ${(props) =>
     props.selectProps
@@ -79,7 +84,6 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
       <List>
         {myFonts.map((font) => {
           return (
-            // <FontItem >
             <ListItem key={font.id} selectProps={font.id === myFontSelected.id}>
               <ColorBlock
                 colorProps={font.color}
@@ -90,7 +94,6 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
               </ColorBlock>
               <FontLabel>{font.label}</FontLabel>
             </ListItem>
-            // </FontItem>
           );
         })}
       </List>
