@@ -9,11 +9,14 @@ const Wrapper = styled.div`
 `;
 const List = styled.ul`
   display: grid;
-  grid-template-columns: minmax(30%, 50%) auto;
-  grid-template-rows: repeat(2, minmax(120px, auto));
-  grid-auto-flow: column;
+  row-gap: 20px;
   padding: 0;
   margin: 0;
+  @media screen and (min-width: 900px) {
+    grid-template-columns: minmax(30%, 50%) auto;
+    grid-template-rows: repeat(2, minmax(120px, auto));
+    grid-auto-flow: column;
+  }
 `;
 
 const ListItem = styled.li`
@@ -22,20 +25,21 @@ const ListItem = styled.li`
   font-size: 1rem;
   color: ${(props) =>
     props.selectProps ? "rgba(0, 0, 0, 0.5)" : "rgb(0, 0, 0)"};
+  @media screen and (min-width: 900px) {
+    &:first-child {
+      flex-direction: column;
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
 
-  &:first-child {
-    flex-direction: column;
-    grid-column: 1;
-    grid-row: 1 / 3;
-  }
+    &:first-of-type div {
+      width: 120px;
+      height: 120px;
+    }
 
-  &:first-of-type div {
-    width: 120px;
-    height: 120px;
-  }
-
-  &:first-of-type :first-child span {
-    font-size: 2.3em;
+    &:first-of-type :first-child span {
+      font-size: 2.3em;
+    }
   }
 `;
 
@@ -89,7 +93,17 @@ const ColoredLetter = styled.span`
   opacity: 0.3;
 `;
 
+const ColorLabel = styled.span`
+  position: absolute;
+  transform: translateX(140%);
+  margin-top: 10px;
+  font-size: 1em;
+  pointer-events: none;
+`;
+
 function MyFonts({ myFonts, myFontSelected, dispatch }) {
+  const [displayColorLabel, setDisplayColorLabel] = useState();
+
   const handleClickFontCard = (font) => {
     dispatch({
       type: "SET_MY_FONT_SELECTED",
@@ -104,6 +118,14 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
     }
   };
 
+  const onMouseEnter = (colorLabel) => {
+    setDisplayColorLabel(colorLabel);
+  };
+
+  const onMouseLeave = () => {
+    setDisplayColorLabel();
+  };
+
   return (
     <Wrapper>
       <List>
@@ -115,10 +137,17 @@ function MyFonts({ myFonts, myFontSelected, dispatch }) {
                 selectProps={font.id === myFontSelected.id}
                 onClick={() => handleClickFontCard(font)}
                 onKeyPress={(event) => handlePressEnterKey(event, font)}
+                onMouseEnter={() => onMouseEnter(font["color-blind-label"])}
+                onMouseLeave={onMouseLeave}
                 tabIndex={0}
+                role="button"
+                aria-label={`font card ${font["color-blind-label"]}`}
               >
                 <ColoredLetter>{font.abbr}</ColoredLetter>
               </ColorBlock>
+              {displayColorLabel === font["color-blind-label"] && (
+                <ColorLabel>{font["color-blind-label"]}</ColorLabel>
+              )}
               <ListDot selectProps={font.id === myFontSelected.id}>
                 <FontLabel selectProps={font.id === myFontSelected.id}>
                   {font.label}

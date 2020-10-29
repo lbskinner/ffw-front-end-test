@@ -10,7 +10,7 @@ const AppContainer = styled.div`
   height: 100%;
   min-height: 400px;
   width: 55%;
-  min-width: 500px;
+  min-width: 400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
