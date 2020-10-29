@@ -5,6 +5,6 @@ export const fetchData = async (content) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.warn(error);
+    console.error(error);
   }
 };

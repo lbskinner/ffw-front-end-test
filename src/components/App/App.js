@@ -23,7 +23,7 @@ const FontTextContainer = styled.div`
   align-items: flex-end;
 `;
 
-const Title = styled.h2`
+const PageHeader = styled.h2`
   font-weight: 500;
   margin: 10px 0;
 `;
@@ -35,7 +35,7 @@ const TabContainer = styled.div`
 
 const TabText = styled.h6`
   padding: 5px;
-  color: red;
+  color: #ff0000;
   margin: 15px 0 15px 10px;
   font-weight: 450;
 
@@ -44,16 +44,16 @@ const TabText = styled.h6`
   }
 
   &.selected {
-    color: rgb(179, 189, 218);
+    color: #b3bdda;
   }
 
   &:focus {
-    outline: thin solid rgb(179, 189, 218);
+    outline: thin solid #b3bdda;
   }
 `;
 
 const FontsContent = styled.div`
-  border: 2px solid rgb(179, 189, 218);
+  border: 2px solid #b3bdda;
   border-radius: 4px;
   flex-grow: 1;
   display: flex;
@@ -63,6 +63,7 @@ const FontsContent = styled.div`
 
 function App({ tabs, myFonts, buyFonts, dispatch }) {
   const [displayMyFonts, setDisplayMyFonts] = useState(true);
+  const [myFontsTab, buyFontsTab] = tabs;
 
   const fetchTabsData = async () => {
     try {
@@ -105,45 +106,50 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
     fetchTabsData();
   }, []);
 
-  const handleClickMyFontsTab = (label) => {
-    if (label === "My Fonts") {
+  const handleClickMyFontsTab = (event, tabLabel) => {
+    event.target.blur();
+    if (tabLabel === "My Fonts") {
       setDisplayMyFonts(true);
       if (myFonts.length === 0) {
-        fetchMyFontsData(tabs[0].content_endpoint);
+        fetchMyFontsData(myFontsTab.content_endpoint);
       }
     } else {
       setDisplayMyFonts(false);
       if (Object.keys(buyFonts).length === 0) {
-        fetchBuyFontsData(tabs[1].content_endpoint);
+        fetchBuyFontsData(buyFontsTab.content_endpoint);
       }
     }
   };
 
-  const handlePressEnterKey = (event, label) => {
+  const handlePressEnterKey = (event, tabLabel) => {
     if (event.key === "Enter") {
-      event.target.blur();
-      handleClickMyFontsTab(label);
+      handleClickMyFontsTab(event, tabLabel);
     }
+  };
+
+  const handleSelected = (tabLabel) => {
+    let classSelected = "";
+    if (
+      (displayMyFonts && tabLabel === "My Fonts") ||
+      (!displayMyFonts && tabLabel === "Buy Fonts")
+    ) {
+      classSelected = "selected";
+    }
+    return classSelected;
   };
 
   return (
     <AppContainer>
       <FontTextContainer>
-        <Title>Please select one font</Title>
+        <PageHeader>Please select one font</PageHeader>
         <TabContainer>
           {tabs.map((tab) => {
             return (
               <TabText
                 key={tab.id}
-                onClick={() => handleClickMyFontsTab(tab.label)}
+                onClick={(event) => handleClickMyFontsTab(event, tab.label)}
                 onKeyPress={(event) => handlePressEnterKey(event, tab.label)}
-                className={
-                  displayMyFonts && tab.label === "My Fonts"
-                    ? "selected"
-                    : !displayMyFonts && tab.label === "Buy Fonts"
-                    ? "selected"
-                    : ""
-                }
+                className={handleSelected(tab.label)}
                 role="button"
                 tabIndex={0}
               >
