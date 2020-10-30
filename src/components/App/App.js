@@ -62,40 +62,28 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
   const [myFontsTab, buyFontsTab] = tabs;
 
   const fetchTabsData = async () => {
-    try {
-      const tabData = await fetchData("tabs");
-      dispatch({
-        type: "SET_TAB_DATA",
-        payload: [...tabData],
-      });
-      fetchMyFontsData(tabData[0].content_endpoint);
-    } catch (error) {
-      console.warn(error);
-    }
+    const tabData = await fetchData("tabs");
+    dispatch({
+      type: "SET_TAB_DATA",
+      payload: [...tabData],
+    });
+    fetchMyFontsData(tabData[0].content_endpoint);
   };
 
   const fetchMyFontsData = async (myFontsContent) => {
-    try {
-      const myFontsData = await fetchData(myFontsContent);
-      dispatch({
-        type: "SET_MY_FONTS",
-        payload: [...myFontsData.content],
-      });
-    } catch (error) {
-      console.warn(error);
-    }
+    const myFontsData = await fetchData(myFontsContent);
+    dispatch({
+      type: "SET_MY_FONTS",
+      payload: [...myFontsData.content],
+    });
   };
 
   const fetchBuyFontsData = async (buyFontsContent) => {
-    try {
-      const buyFontsData = await fetchData(buyFontsContent);
-      dispatch({
-        type: "SET_BUY_FONTS",
-        payload: buyFontsData,
-      });
-    } catch (error) {
-      console.warn(error);
-    }
+    const buyFontsData = await fetchData(buyFontsContent);
+    dispatch({
+      type: "SET_BUY_FONTS",
+      payload: buyFontsData,
+    });
   };
 
   useEffect(() => {
