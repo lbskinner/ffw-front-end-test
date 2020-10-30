@@ -35,16 +35,12 @@ const TabContainer = styled.div`
 
 const TabText = styled.h6`
   padding: 5px;
-  color: #ff0000;
+  color: ${(props) => (props.selected ? "#b3bdda" : "#ff0000")};
   margin: 15px 0 15px 10px;
   font-weight: 450;
 
   &:hover {
     cursor: pointer;
-  }
-
-  &.selected {
-    color: #b3bdda;
   }
 
   &:focus {
@@ -127,15 +123,15 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
     }
   };
 
-  const handleSelected = (tabLabel) => {
-    let classSelected = "";
+  const tabIsSelected = (tabLabel) => {
+    let selected = false;
     if (
       (displayMyFonts && tabLabel === "My Fonts") ||
       (!displayMyFonts && tabLabel === "Buy Fonts")
     ) {
-      classSelected = "selected";
+      selected = true;
     }
-    return classSelected;
+    return selected;
   };
 
   return (
@@ -149,7 +145,7 @@ function App({ tabs, myFonts, buyFonts, dispatch }) {
                 key={tab.id}
                 onClick={(event) => handleClickMyFontsTab(event, tab.label)}
                 onKeyPress={(event) => handlePressEnterKey(event, tab.label)}
-                className={handleSelected(tab.label)}
+                selected={tabIsSelected(tab.label)}
                 role="button"
                 tabIndex={0}
               >
